@@ -1,1 +1,0 @@
-export { SeedexPanel } from './SeedexPanel';
