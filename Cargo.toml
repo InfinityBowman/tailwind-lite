@@ -1,0 +1,20 @@
+[package]
+name = "tailwind-lite"
+version = "0.1.0"
+edition = "2021"
+description = "Minimal Tailwind CSS v4 compiler as a single binary. No JS runtime required."
+license = "MIT"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+lightningcss = "1.0.0-alpha.71"
+walkdir = "2"
+regex = "1"
+rustc-hash = "2"
+tailwindcss-oxide = { git = "https://github.com/tailwindlabs/tailwindcss.git", rev = "36417cbd12e99ce77676bd1d4589e8f07f1853c1" }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true

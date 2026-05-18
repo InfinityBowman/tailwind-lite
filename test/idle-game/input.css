@@ -1,0 +1,255 @@
+@import 'tailwindcss';
+@source "./src";
+
+/* Space Theme - Dark Blue/Purple with Slate */
+@theme {
+  /* Tier colors for seeds */
+  --color-tier-1: #6b7280;
+  --color-tier-2: #22c55e;
+  --color-tier-3: #3b82f6;
+  --color-tier-4: #a855f7;
+  --color-tier-5: #f97316;
+  --color-tier-6: #eab308;
+
+  /* shadcn semantic colors - Space Theme */
+  --color-background: #0f0f1a;
+  --color-foreground: #e2e8f0;
+
+  --color-card: #1a1a2e;
+  --color-card-foreground: #e2e8f0;
+
+  --color-popover: #1a1a2e;
+  --color-popover-foreground: #e2e8f0;
+
+  --color-primary: #6366f1;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #2a2a4a;
+  --color-secondary-foreground: #e2e8f0;
+
+  --color-muted: #1e1e38;
+  --color-muted-foreground: #94a3b8;
+
+  --color-accent: #2d2d5a;
+  --color-accent-foreground: #e2e8f0;
+
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #334155;
+  --color-input: #334155;
+  --color-ring: #6366f1;
+
+  --radius: 0.75rem;
+}
+
+html,
+body,
+#root {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: black;
+  background-attachment: fixed;
+}
+
+body {
+  background: linear-gradient(180deg, #0a0a15 0%, #0f0f1a 50%, #151528 100%);
+  color: var(--color-foreground);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+  position: relative;
+}
+
+/* Star background effect - using body::before so it's above html gradient */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, #6366f1, transparent),
+    radial-gradient(2px 2px at 40px 70px, #818cf8, transparent),
+    radial-gradient(1px 1px at 90px 40px, #c4b5fd, transparent),
+    radial-gradient(2px 2px at 160px 120px, #6366f1, transparent),
+    radial-gradient(1px 1px at 230px 80px, #a5b4fc, transparent),
+    radial-gradient(2px 2px at 300px 160px, #818cf8, transparent),
+    radial-gradient(1px 1px at 400px 60px, #c4b5fd, transparent),
+    radial-gradient(2px 2px at 500px 200px, #6366f1, transparent),
+    radial-gradient(1px 1px at 600px 100px, #a5b4fc, transparent),
+    radial-gradient(2px 2px at 700px 180px, #818cf8, transparent),
+    radial-gradient(1px 1px at 100px 250px, #c4b5fd, transparent),
+    radial-gradient(2px 2px at 250px 300px, #6366f1, transparent),
+    radial-gradient(1px 1px at 450px 350px, #a5b4fc, transparent),
+    radial-gradient(2px 2px at 650px 280px, #818cf8, transparent);
+  background-size: 800px 400px;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+  animation: twinkle 8s ease-in-out infinite alternate;
+}
+
+/* Ensure content appears above stars */
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+/* Tier glow effects */
+.glow-tier-1 {
+  box-shadow: 0 0 10px var(--color-tier-1);
+}
+.glow-tier-2 {
+  box-shadow: 0 0 10px var(--color-tier-2);
+}
+.glow-tier-3 {
+  box-shadow: 0 0 10px var(--color-tier-3);
+}
+.glow-tier-4 {
+  box-shadow: 0 0 15px var(--color-tier-4);
+}
+.glow-tier-5 {
+  box-shadow: 0 0 15px var(--color-tier-5);
+}
+.glow-tier-6 {
+  box-shadow: 0 0 20px var(--color-tier-6);
+  animation: legendary-glow 2s ease-in-out infinite;
+}
+
+@keyframes legendary-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 15px var(--color-tier-6);
+  }
+  50% {
+    box-shadow:
+      0 0 30px var(--color-tier-6),
+      0 0 50px var(--color-tier-6);
+  }
+}
+
+/* Fade-in animation for gacha reveals */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Planet pulse animation */
+@keyframes planet-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+}
+
+.animate-planet-pulse {
+  animation: planet-pulse 3s ease-in-out infinite;
+}
+
+/* Subtle pulse for suggested action button */
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(99, 102, 241, 0.5);
+  }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Stats typography */
+.stats-label {
+  font-size: 0.75rem;
+  color: var(--color-muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stats-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+/* Safe area padding for devices with home indicator */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Accessibility: Reduced motion fallback
+ * Defense-in-depth for users with vestibular disorders.
+ * Individual components also check useReducedMotion hook. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Preserve non-motion transitions like color changes */
+  .allow-color-transitions {
+    transition-duration: 200ms !important;
+    transition-property: color, background-color, border-color, fill, stroke !important;
+  }
+}
