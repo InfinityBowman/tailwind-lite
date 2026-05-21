@@ -84,6 +84,18 @@ impl Theme {
     }
 
     pub fn set(&mut self, key: &str, value: &str, inline: bool) {
+        if key.ends_with("-*") && value == "initial" {
+            let prefix = &key[..key.len() - 1];
+            let to_remove: Vec<String> = self.values.keys()
+                .filter(|k| k.starts_with(prefix) && *k != key)
+                .cloned()
+                .collect();
+            for k in &to_remove {
+                self.values.remove(k);
+            }
+            self.insertion_order.retain(|k| !to_remove.contains(k));
+            return;
+        }
         self.insert(key.to_string(), value.to_string(), inline, true);
     }
 
@@ -259,7 +271,7 @@ impl Theme {
                 if tv.user_defined {
                     if tv.inline {
                         if !user_css_vars.contains(key.as_str()) { continue; }
-                    } else if !tv.used.get() {
+                    } else if !expanded.contains(key.as_str()) {
                         continue;
                     }
                 } else {

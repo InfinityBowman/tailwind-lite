@@ -51,7 +51,15 @@ pub fn compile(
     let custom_names: FxHashSet<String> = parsed
         .custom_utilities
         .iter()
-        .map(|u| u.name.clone())
+        .flat_map(|u| {
+            let escaped = u.name.clone();
+            let unescaped = escaped.replace('\\', "");
+            if unescaped == escaped {
+                vec![escaped]
+            } else {
+                vec![escaped, unescaped]
+            }
+        })
         .collect();
 
     let custom_variant_names: Vec<String> = parsed.custom_variants.iter().map(|cv| cv.name.clone()).collect();
@@ -74,7 +82,7 @@ pub fn compile(
         let util_output = utilities.compile_with_properties(&candidate, theme).or_else(|| {
             match &candidate {
                 Candidate::Static { root, .. } | Candidate::Functional { root, .. } => {
-                    parsed.custom_utilities.iter().find(|u| u.name == *root).map(|u| {
+                    parsed.custom_utilities.iter().find(|u| u.name == *root || u.name.replace('\\', "") == *root).map(|u| {
                         if u.body.contains('{') {
                             custom_raw_body = Some(u.body.clone());
                         }

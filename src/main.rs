@@ -80,7 +80,8 @@ fn main() {
         source_globs.push(input_dir.to_string_lossy().to_string());
     }
 
-    let candidates = scanner::scan_sources(&source_globs, &cwd);
+    let scan_result = scanner::scan_sources(&source_globs, &cwd);
+    let candidates = scan_result.candidates;
 
     let utility_registry = utilities::create_utilities();
     let mut variant_registry = variants::create_variants(&theme);
@@ -117,6 +118,7 @@ fn main() {
         &theme,
         &parsed,
         cli.minify,
+        &scan_result.css_variables,
     );
     let css = css_functions::substitute_functions(
         &css,

@@ -595,6 +595,8 @@ pub fn create_utilities() -> UtilityRegistry {
     s!("grow-0", "flex-grow" => "0");
     s!("shrink", "flex-shrink" => "1");
     s!("shrink-0", "flex-shrink" => "0");
+    s!("flex-shrink", "flex-shrink" => "1");
+    s!("flex-shrink-0", "flex-shrink" => "0");
 
     // Flex
     s!("flex-1", "flex" => "1");
@@ -894,7 +896,10 @@ pub fn create_utilities() -> UtilityRegistry {
     s!("duration-initial", "--tw-duration" => "initial");
 
     // Transform
-    s!("transform", "transform" => "var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)");
+    statics.insert("transform".into(), UtilityOutput {
+        declarations: vec![("transform".into(), "var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)".into())],
+        properties: rotate_skew_properties(),
+    });
     s!("transform-none", "transform" => "none");
     s!("transform-cpu", "transform" => "var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)");
     s!("transform-gpu", "transform" => "translateZ(0) var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,)");

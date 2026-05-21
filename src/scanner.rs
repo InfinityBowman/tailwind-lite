@@ -27,8 +27,14 @@ const IGNORED_FILES: &[&str] = &[
     ".gitignore", ".env",
 ];
 
-pub fn scan_sources(source_paths: &[String], cwd: &Path) -> Vec<String> {
+pub struct ScanResult {
+    pub candidates: Vec<String>,
+    pub css_variables: Vec<String>,
+}
+
+pub fn scan_sources(source_paths: &[String], cwd: &Path) -> ScanResult {
     let mut candidates = HashSet::new();
+    let mut css_variables = HashSet::new();
 
     for source in source_paths {
         let dir = if Path::new(source).is_absolute() {
@@ -78,14 +84,26 @@ pub fn scan_sources(source_paths: &[String], cwd: &Path) -> Vec<String> {
                                 candidates.insert(s.to_string());
                             }
                         }
-                        Extracted::CssVariable(_) => {}
+                        Extracted::CssVariable(bytes) => {
+                            if let Ok(s) = std::str::from_utf8(bytes) {
+                                let var_name = if s.starts_with("--") {
+                                    s.to_string()
+                                } else {
+                                    format!("--{}", s)
+                                };
+                                css_variables.insert(var_name);
+                            }
+                        }
                     }
                 }
             }
         }
     }
 
-    let mut result: Vec<String> = candidates.into_iter().collect();
-    result.sort();
-    result
+    let mut candidates: Vec<String> = candidates.into_iter().collect();
+    candidates.sort();
+    ScanResult {
+        candidates,
+        css_variables: css_variables.into_iter().collect(),
+    }
 }

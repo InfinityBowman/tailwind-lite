@@ -7,6 +7,7 @@ pub fn assemble(
     theme: &Theme,
     parsed: &ParsedInput,
     minify: bool,
+    source_css_variables: &[String],
 ) -> String {
     let mut utilities_css = String::with_capacity(16 * 1024);
     for rule in rules {
@@ -48,6 +49,12 @@ pub fn assemble(
         .collect();
     for v in preflight_only_defaults {
         used_vars.remove(&v);
+    }
+
+    for var_name in source_css_variables {
+        if theme.is_user_defined(var_name) {
+            used_vars.insert(var_name.clone());
+        }
     }
 
     // Mark user-defined theme vars referenced in passthrough CSS, user base, and keyframes
