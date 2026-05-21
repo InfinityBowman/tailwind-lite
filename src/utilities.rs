@@ -1111,6 +1111,10 @@ pub fn create_utilities() -> UtilityRegistry {
     s!("bg-right", "background-position" => "right");
     s!("bg-right-bottom", "background-position" => "right bottom");
     s!("bg-right-top", "background-position" => "right top");
+    s!("bg-bottom-left", "background-position" => "left bottom");
+    s!("bg-bottom-right", "background-position" => "right bottom");
+    s!("bg-top-left", "background-position" => "left top");
+    s!("bg-top-right", "background-position" => "right top");
     s!("bg-center", "background-position" => "center");
     s!("bg-no-repeat", "background-repeat" => "no-repeat");
     s!("bg-repeat", "background-repeat" => "repeat");
@@ -1236,7 +1240,10 @@ pub fn create_utilities() -> UtilityRegistry {
     // Shadow/inset-shadow/text-shadow initial
     s!("shadow-initial", "--tw-shadow-color" => "initial");
     s!("inset-shadow-initial", "--tw-inset-shadow-color" => "initial");
-    s!("text-shadow-initial", "--tw-text-shadow-color" => "initial");
+    statics.insert("text-shadow-initial".into(), UtilityOutput {
+        declarations: vec![("--tw-text-shadow-color".into(), "initial".into())],
+        properties: text_shadow_properties(),
+    });
 
     // Fill/stroke none
     s!("fill-none", "fill" => "none");
